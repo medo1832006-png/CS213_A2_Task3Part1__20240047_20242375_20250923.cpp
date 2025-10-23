@@ -100,18 +100,18 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         playerAudio.setPosition(0.0);
     }
     if (button == &muteButton)
-{
-    playerAudio.mute();
-    if (playerAudio.isMuted())
     {
-        muteButton.setButtonText("Unmute");
-    }
-    else
-    {
-        muteButton.setButtonText("Mute");
-    }
+        playerAudio.mute();
+        if (playerAudio.isMuted())
+        {
+            muteButton.setButtonText("Unmute");
+        }
+        else
+        {
+            muteButton.setButtonText("Mute");
+        }
 
-}
+    }
 
 
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)
@@ -119,4 +119,5 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider)
         playerAudio.setGain((float)slider->getValue());
 }
+
 
