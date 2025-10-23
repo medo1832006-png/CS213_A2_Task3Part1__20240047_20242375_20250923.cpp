@@ -74,4 +74,23 @@ double PlayerAudio::getPosition() const
 void PlayerAudio::start()
 {
     transportSource.start();
+
+}
+void PlayerAudio::mute()
+{
+    if (muted == false)
+    {
+        previousVolume = transportSource.getGain();
+        setGain(0.0f);
+        muted = true;
+    }
+    else
+    {
+        setGain(previousVolume);
+        muted = false;
+    }
+}
+bool PlayerAudio::isMuted()const
+{
+    return muted;
 }
