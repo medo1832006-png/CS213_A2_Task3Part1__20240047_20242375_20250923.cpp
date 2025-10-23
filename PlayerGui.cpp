@@ -11,6 +11,12 @@ void PlayerGUI::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 void PlayerGUI::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill)
 {
     playerAudio.getNextAudioBlock(bufferToFill);
+    if (isRepeating && transportSource.getCurrentPosition() >= transportSource.getLengthInSeconds())
+{
+    transportSource.setPosition(0.0);
+    transportSource.start();
+}
+    
 }
 
 void PlayerGUI::releaseResources()
@@ -29,7 +35,7 @@ PlayerGUI::PlayerGUI()
 {
 
     // Add buttons
-    for (auto* btn : { &loadButton, &restartButton , &stopButton , &gotostartButton , &muteButton })
+    for (auto* btn : { &loadButton, &restartButton , &stopButton , &gotostartButton , &muteButton, &repeatButton })
     {
         btn->addListener(this);
         addAndMakeVisible(btn);
@@ -50,6 +56,8 @@ void PlayerGUI::resized()
     stopButton.setBounds(240, y, 80, 40);
     gotostartButton.setBounds(340, y, 80, 40);
     muteButton.setBounds(440, y, 80, 40);
+     repeatButton.setBounds(560, y, 80, 40);
+    
     /*prevButton.setBounds(340, y, 80, 40);
     nextButton.setBounds(440, y, 80, 40);*/
 
@@ -110,6 +118,15 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         {
             muteButton.setButtonText("Mute");
         }
+         if (button == &repeatButton)
+ {
+     isRepeating = !isRepeating; 
+
+     if (isRepeating)
+         repeatButton.setButtonText("Repeat: ON");
+     else
+         repeatButton.setButtonText("Repeat: OFF");
+ }
 
     }
 
@@ -119,5 +136,6 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider)
         playerAudio.setGain((float)slider->getValue());
 }
+
 
 
