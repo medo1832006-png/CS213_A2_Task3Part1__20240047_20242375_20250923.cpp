@@ -32,8 +32,7 @@ private:
     juce::AudioTransportSource transportSource;
     bool muted = false;
     float previousVolume = 1.0f;
-     bool isRepeating = false;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
+        bool isRepeating = false;
 };
-
 
