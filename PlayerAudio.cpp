@@ -17,6 +17,10 @@ void PlayerAudio::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 void PlayerAudio::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill)
 {
     transportSource.getNextAudioBlock(bufferToFill);
+     if (isRepeating && transportSource.getCurrentPosition() >= transportSource.getLengthInSeconds() - 0.1)
+ {
+     transportSource.setPosition(0.0);
+ }
 }
 
 void PlayerAudio::releaseResources()
@@ -93,4 +97,18 @@ void PlayerAudio::mute()
 bool PlayerAudio::isMuted()const
 {
     return muted;
+}
+void PlayerAudio::toggleRepeat()
+{
+    isRepeating = !isRepeating;
+}
+
+void PlayerAudio::setRepeat(bool shouldRepeat)
+{
+    isRepeating = shouldRepeat;
+}
+
+bool PlayerAudio::isRepeatEnabled() const
+{
+    return isRepeating;
 }
