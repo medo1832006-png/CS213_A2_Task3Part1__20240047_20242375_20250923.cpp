@@ -1,6 +1,6 @@
- #pragma once
+#pragma once
 #include <JuceHeader.h>
-#include "PlayerAudio.h"
+#include "playerAudio.h"
 
 class PlayerGUI : public juce::Component,
     public juce::Button::Listener,
@@ -21,16 +21,16 @@ private:
     PlayerAudio playerAudio;
 
     // GUI elements
-    juce::TextButton loadButton{ "Load File" };
+    juce::TextButton loadButton{ "Load Files" };
     juce::TextButton restartButton{ "Restart" };
     juce::TextButton stopButton{ "Stop" };
     juce::TextButton gotostartButton{ "start" };
     juce::TextButton muteButton{ "Mute" };
+
     juce::TextButton repeatButton{ "repeat: off" };
     bool isRepeating = false;
 
     juce::Slider volumeSlider;
-
     std::unique_ptr<juce::FileChooser> fileChooser;
 
     // Event handlers
@@ -39,5 +39,3 @@ private:
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerGUI)
 };
-
-
