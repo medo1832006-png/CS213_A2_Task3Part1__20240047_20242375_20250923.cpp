@@ -1,6 +1,6 @@
 
 
-#include "PlayerGui.h"
+#include "playerGui.h"
 
 
 void PlayerGUI::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
@@ -11,6 +11,8 @@ void PlayerGUI::prepareToPlay(int samplesPerBlockExpected, double sampleRate)
 void PlayerGUI::getNextAudioBlock(const juce::AudioSourceChannelInfo& bufferToFill)
 {
     playerAudio.getNextAudioBlock(bufferToFill);
+    
+   
 }
 
 void PlayerGUI::releaseResources()
@@ -29,7 +31,7 @@ PlayerGUI::PlayerGUI()
 {
 
     // Add buttons
-    for (auto* btn : { &loadButton, &restartButton , &stopButton , &gotostartButton , &muteButton, &repeatButton })
+    for (auto* btn : { &loadButton, &restartButton , &stopButton, &gotostartButton, &muteButton, &repeatButton })
     {
         btn->addListener(this);
         addAndMakeVisible(btn);
@@ -65,12 +67,12 @@ void PlayerGUI::buttonClicked(juce::Button* button)
 {
     if (button == &loadButton)
     {
-        juce::FileChooser chooser("Select audio files...",
+        juce::FileChooser chooser("select audio files...",
             juce::File{},
             "*.wav;*.mp3");
 
         fileChooser = std::make_unique<juce::FileChooser>(
-            "Select an audio file...",
+            "select an audio file...",
             juce::File{},
             "*.wav;*.mp3");
 
@@ -111,18 +113,19 @@ void PlayerGUI::buttonClicked(juce::Button* button)
         {
             muteButton.setButtonText("Mute");
         }
-        if (button == &repeatButton)
-{
-    playerAudio.toggleRepeat();
-    isRepeating = playerAudio.isRepeatEnabled();
-
-    if (isRepeating)
-        repeatButton.setButtonText("repeat: on");
-    else
-        repeatButton.setButtonText("repeat: off");
-}
-
     }
+    if (button == &repeatButton)
+    {
+        playerAudio.toggleRepeat();
+        isRepeating = playerAudio.isRepeatEnabled();
+
+        if (isRepeating)
+            repeatButton.setButtonText("repeat: on");
+        else
+            repeatButton.setButtonText("repeat: off");
+    }
+
+}
 
 
 void PlayerGUI::sliderValueChanged(juce::Slider* slider)
@@ -130,6 +133,3 @@ void PlayerGUI::sliderValueChanged(juce::Slider* slider)
     if (slider == &volumeSlider)
         playerAudio.setGain((float)slider->getValue());
 }
-
-
-
