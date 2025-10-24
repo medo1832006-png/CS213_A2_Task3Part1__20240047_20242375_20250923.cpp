@@ -21,6 +21,10 @@ public:
     void setPosition(double pos);
     double getPosition() const;
     double getLength() const;
+    void toggleRepeat();
+    void setRepeat(bool shouldRepeat);
+    bool isRepeatEnabled() const;
+
 
 private:
     juce::AudioFormatManager formatManager;
@@ -28,6 +32,8 @@ private:
     juce::AudioTransportSource transportSource;
     bool muted = false;
     float previousVolume = 1.0f;
+     bool isRepeating = false;
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PlayerAudio)
 };
+
 
